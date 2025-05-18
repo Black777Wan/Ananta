@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roam-like Note Taking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roam.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/audio-recording.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="roam-container">
+        <!-- Left Sidebar -->
+        <div class="roam-sidebar">
+            <div class="roam-sidebar-content">
+                <div class="roam-sidebar-header">
+                    <span class="logo">
+                        <i class="fas fa-asterisk"></i>
+                    </span>
+                </div>
+                <div class="roam-sidebar-nav">
+                    <div class="sidebar-section">
+                        <a href="#" id="daily-notes-link" class="sidebar-link active">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Daily Notes</span>
+                        </a>
+                        <a href="#" id="graph-overview-link" class="sidebar-link">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>Graph Overview</span>
+                        </a>
+                        <a href="#" id="all-pages-link" class="sidebar-link">
+                            <i class="far fa-copy"></i>
+                            <span>All Pages</span>
+                        </a>
+                    </div>
+                    <div class="sidebar-section">
+                        <div class="sidebar-section-header">
+                            <span>SHORTCUTS</span>
+                        </div>
+                        <div id="shortcuts-list">
+                            <!-- Shortcuts will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="roam-main">
+            <div class="roam-topbar">
+                <div class="search-wrapper">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Find or Create Page">
+                    </div>
+                    <div class="topbar-actions">
+                        <button class="topbar-btn" id="menu-btn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="roam-article">
+                <div class="page-header">
+                    <div class="page-title-wrapper">
+                        <input type="text" id="page-title" class="page-title" placeholder="Untitled Page">
+                    </div>
+                </div>
+
+                <div class="blocks-container" id="blocks-container">
+                    <!-- Blocks will be dynamically added here -->
+                    <div class="block-wrapper" data-block-id="root">
+                        <div class="block">
+                            <div class="block-bullet">•</div>
+                            <div class="block-content" contenteditable="true" placeholder="Type here..."></div>
+                        </div>
+                        <div class="block-children"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- References Section -->
+            <div class="references-section">
+                <div class="references-header">
+                    <h3>Linked References</h3>
+                </div>
+                <div class="references-content" id="references-content">
+                    <!-- References will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Menu -->
+    <div class="help-menu">
+        <button class="help-btn">
+            <i class="far fa-question-circle"></i>
+        </button>
+    </div>
+
+    <!-- Templates -->
+    <template id="block-template">
+        <div class="block-wrapper" data-block-id="">
+            <div class="block">
+                <div class="block-bullet">•</div>
+                <div class="block-content" contenteditable="true" placeholder="Type here..."></div>
+            </div>
+            <div class="block-children"></div>
+        </div>
+    </template>
+
+    <template id="reference-template">
+        <div class="reference-item">
+            <div class="reference-page-title"></div>
+            <div class="reference-block-content"></div>
+        </div>
+    </template>
+
+    <script src="{{ url_for('static', filename='js/roam.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/audio-recording.js') }}"></script>
+</body>
+</html>

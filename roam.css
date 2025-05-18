@@ -1,0 +1,380 @@
+/* Roam Research CSS - Exact Replica */
+
+/* Base Styles and Variables */
+:root {
+  --roam-bg-color: #fff;
+  --roam-text-color: #333;
+  --roam-muted-color: #666;
+  --roam-light-color: #eee;
+  --roam-border-color: #e4e9ec;
+  --roam-highlight-color: #0c6dff;
+  --roam-bullet-color: #ccc;
+  --roam-sidebar-bg: #f7f8fa;
+  --roam-sidebar-width: 240px;
+  --roam-topbar-height: 50px;
+  --roam-block-indent: 24px;
+  --roam-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --roam-monospace-font: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* Dark Mode (to be toggled via JS) */
+body.dark-mode {
+  --roam-bg-color: #202124;
+  --roam-text-color: #dcddde;
+  --roam-muted-color: #999;
+  --roam-light-color: #333;
+  --roam-border-color: #393b40;
+  --roam-highlight-color: #4c7bea;
+  --roam-bullet-color: #555;
+  --roam-sidebar-bg: #2a2b2d;
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--roam-font);
+  color: var(--roam-text-color);
+  background-color: var(--roam-bg-color);
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Main Container */
+.roam-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar Styles */
+.roam-sidebar {
+  width: var(--roam-sidebar-width);
+  height: 100%;
+  background-color: var(--roam-sidebar-bg);
+  border-right: 1px solid var(--roam-border-color);
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.roam-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.roam-sidebar-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--roam-border-color);
+}
+
+.roam-sidebar-header .logo {
+  font-size: 20px;
+  color: var(--roam-highlight-color);
+}
+
+.roam-sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.sidebar-section {
+  margin-bottom: 16px;
+}
+
+.sidebar-section-header {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--roam-muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  color: var(--roam-text-color);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sidebar-link i {
+  margin-right: 8px;
+  width: 16px;
+  text-align: center;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-link.active {
+  color: var(--roam-highlight-color);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Main Content Area */
+.roam-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Top Bar */
+.roam-topbar {
+  height: var(--roam-topbar-height);
+  border-bottom: 1px solid var(--roam-border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.search-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 300px;
+}
+
+.search-input-wrapper i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--roam-muted-color);
+}
+
+#search-input {
+  width: 100%;
+  padding: 8px 8px 8px 32px;
+  border: 1px solid var(--roam-border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--roam-bg-color);
+  color: var(--roam-text-color);
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: var(--roam-highlight-color);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+.topbar-btn {
+  background: none;
+  border: none;
+  color: var(--roam-text-color);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.topbar-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Article Area */
+.roam-article {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 40px;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+.page-title-wrapper {
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: var(--roam-text-color);
+  padding: 4px 0;
+}
+
+.page-title:focus {
+  outline: none;
+  border-bottom: 2px solid var(--roam-highlight-color);
+}
+
+/* Block Styles - Critical for Roam-like experience */
+.blocks-container {
+  position: relative;
+}
+
+.block-wrapper {
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.block {
+  display: flex;
+  align-items: flex-start;
+  min-height: 24px;
+  position: relative;
+}
+
+.block-bullet {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--roam-bullet-color);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.block-bullet:hover {
+  color: var(--roam-highlight-color);
+}
+
+.block-content {
+  flex: 1;
+  min-height: 24px;
+  padding: 3px 0;
+  outline: none;
+  word-break: break-word;
+}
+
+.block-content:focus {
+  outline: none;
+}
+
+.block-content:empty:before {
+  content: attr(placeholder);
+  color: var(--roam-muted-color);
+  pointer-events: none;
+}
+
+.block-children {
+  padding-left: var(--roam-block-indent);
+}
+
+/* References Section */
+.references-section {
+  border-top: 1px solid var(--roam-border-color);
+  padding: 16px 40px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.references-header {
+  margin-bottom: 16px;
+}
+
+.references-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--roam-text-color);
+}
+
+.reference-item {
+  margin-bottom: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.reference-page-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--roam-highlight-color);
+  cursor: pointer;
+}
+
+.reference-block-content {
+  font-size: 14px;
+  color: var(--roam-text-color);
+}
+
+/* Help Menu */
+.help-menu {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+.help-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--roam-highlight-color);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Wiki Links Styling */
+.roam-link {
+  color: var(--roam-highlight-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.roam-link:hover {
+  border-bottom: 1px solid var(--roam-highlight-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .roam-sidebar {
+    position: fixed;
+    left: -100%;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .roam-sidebar.open {
+    left: 0;
+  }
+  
+  .roam-article {
+    padding: 16px;
+  }
+  
+  .references-section {
+    padding: 16px;
+  }
+  
+  .search-input-wrapper {
+    width: 100%;
+  }
+}
