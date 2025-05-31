@@ -1,35 +1,32 @@
-# Note Taking App Development Todo
+# Audio Recorder Web App (OBS-like) Todo List
 
-## Research and Planning
-- [x] Research key features of Roam Research
-- [x] Determine essential features for minimal viable product
-- [x] Select appropriate web app template
-- [x] Outline application structure
-- [x] Plan feature implementation approach
+## Setup and Scaffolding
+- [x] Select appropriate web app template (React)
+- [x] Scaffold React application structure
+- [x] Create project directory structure for audio components
 
-## Development
-- [x] Set up project structure
-- [x] Implement database models (Note, Block, Link)
-- [x] Implement daily notes functionality
-- [x] Implement note and block management
-- [x] Implement backlinks and bidirectional linking
-- [x] Implement search functionality
-- [x] Design and implement user interface
-- [x] Add styling for aesthetically pleasing experience
+## Implementation
+- [x] Implement audio device selection functionality
+- [x] Create audio recording interface
+- [x] Implement audio visualization (waveform/levels)
+- [x] Add audio playback controls
+- [x] Implement audio download functionality
+- [x] Add recording timer and status indicators
+- [x] Style the application to be user-friendly
+- [x] Implement desktop/system audio capture
+- [x] Add seamless device switching functionality
 
-## Testing and Deployment
-- [ ] Test markdown support and rendering
-- [ ] Test backlinks system functionality
-- [ ] Test block-based note structure
-- [ ] Test bidirectional linking
-- [ ] Fix any identified issues
-- [ ] Deploy application
-- [ ] Document usage instructions
-- [ ] Create user interface with sidebar and panels
-- [ ] Add search functionality
+## Testing and Validation
+- [x] Test audio recording functionality
+- [x] Test playback functionality
+- [x] Test download functionality
+- [x] Validate cross-browser compatibility
+- [x] Test on different devices/screen sizes
+- [x] Test desktop audio capture
+- [x] Test seamless device switching
 
-## Testing and Deployment
-- [ ] Test core functionality
-- [ ] Fix any identified issues
-- [ ] Deploy application
-- [ ] Document usage instructions
+## Deployment
+- [x] Prepare application for deployment
+- [x] Deploy application
+- [x] Provide access link to user
+- [ ] Update deployment with new features
