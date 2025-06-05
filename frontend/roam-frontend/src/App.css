@@ -1,17 +1,43 @@
 /* Global styles for the application */
 
 :root {
-  --primary-color: #2a4b8d;
-  --secondary-color: #6c8eef;
-  --accent-color: #ff6b6b;
-  --background-color: #f8f9fa;
-  --sidebar-bg: #f0f2f5;
-  --right-panel-bg: #f0f2f5;
-  --text-color: #333;
-  --border-color: #ddd;
-  --block-hover-bg: #eef2ff;
-  --link-color: #4361ee;
-  --recording-red: #ff4d4d;
+  /* Color Palette */
+  --background-color: #ffffff;
+  --sidebar-bg: #f7f7f7;
+  --right-panel-bg: #f7f7f7;
+  --text-color: #333333;
+  --muted-text-color: #757575;
+  --border-color: #e0e0e0;
+  --primary-accent-color: #509aaf; /* Desaturated, calm blue/teal */
+  --primary-accent-rgb: 80, 154, 175; /* For rgba() usage */
+  --secondary-accent-color: #e0e0e0; /* Neutral gray for secondary elements */
+  --hover-bg-color: rgba(var(--primary-accent-rgb), 0.1);
+  --active-bg-color: rgba(var(--primary-accent-rgb), 0.2);
+  --item-hover-bg: var(--hover-bg-color); /* Renamed from --block-hover-bg */
+  --link-color: var(--primary-accent-color);
+  /* --recording-red: #f39c12; */ /* Muted orange/amber - No longer directly used by buttons */
+
+  /* Spacing base unit */
+  --base-spacing-unit: 8px;
+  --spacing-xs: calc(var(--base-spacing-unit) * 0.5); /* 4px */
+  --spacing-sm: var(--base-spacing-unit); /* 8px */
+  --spacing-md: calc(var(--base-spacing-unit) * 1.5); /* 12px */
+  --spacing-lg: calc(var(--base-spacing-unit) * 2); /* 16px */
+  --spacing-xl: calc(var(--base-spacing-unit) * 3); /* 24px */
+  --spacing-xxl: calc(var(--base-spacing-unit) * 4); /* 32px */
+
+  /* Main editor specific variables */
+  --indent-unit: var(--spacing-xl); /* 24px for block indentation */
+
+  /* Border Radii */
+  --border-radius-sm: 3px;
+  --border-radius-md: 4px; /* Standard radius */
+  --border-radius-lg: 6px;
+  --border-radius-round: 50%;
+
+  /* Transitions */
+  --transition-fast: all 0.15s ease-in-out;
+  --transition-normal: all 0.2s ease; /* Matches current common usage */
 }
 
 * {
@@ -25,9 +51,163 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: var(--text-color);
   background-color: var(--background-color);
-  line-height: 1.6;
+  line-height: 1.7; /* Updated line-height */
+  font-size: 16px; /* Base font-size */
 }
 
+/* Base element resets/defaults */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0; /* Common reset */
+}
+
+input,
+select,
+textarea {
+  padding: var(--spacing-sm) var(--spacing-md); /* Default padding for all text-based inputs */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--background-color);
+  color: var(--text-color); /* Ensure text color is inherited or set */
+  transition: var(--transition-normal); /* Standardized transition */
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-accent-color);
+  box-shadow: 0 0 0 2px rgba(var(--primary-accent-rgb), 0.2);
+  outline: none;
+}
+
+/* Specific Input Classes if needed for width or minor variations */
+.input-base { /* Can be used to apply to specific inputs if not all inputs/selects are styled this way by default */
+  /* width: 100%; */ /* Common case for inputs in this app, but applied directly to .search-input for now */
+}
+
+/* Button Standardization */
+.btn {
+  display: inline-flex; /* Aligns icon and text if used */
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md); /* Default: 8px 12px */
+  font-size: 0.9rem; /* Default button font size */
+  font-weight: 500; /* Default button font weight */
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid transparent; /* Base border */
+  transition: var(--transition-normal);
+  user-select: none; /* Prevent text selection on click */
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), 0.3); /* Focus ring */
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--primary-accent-color);
+  color: white;
+  border-color: var(--primary-accent-color);
+}
+.btn-primary:hover {
+  background-color: rgba(var(--primary-accent-rgb), 0.85); /* Slightly darker */
+  border-color: rgba(var(--primary-accent-rgb), 0.85);
+}
+.btn-primary:active {
+  background-color: rgba(var(--primary-accent-rgb), 0.7); /* Even darker for active */
+  border-color: rgba(var(--primary-accent-rgb), 0.7);
+}
+
+/* Secondary Button (Muted/Darker) */
+.btn-secondary {
+  background-color: var(--muted-text-color); /* Example: #757575 */
+  color: white;
+  border-color: var(--muted-text-color);
+}
+.btn-secondary:hover {
+  background-color: #5e5e5e; /* Darken var(--muted-text-color) */
+  border-color: #5e5e5e;
+}
+.btn-secondary:active {
+  background-color: #474747; /* Darken further */
+  border-color: #474747;
+}
+
+/* Tertiary/Light Button (e.g., Pause, Cancel) */
+.btn-light {
+  background-color: var(--secondary-accent-color); /* Example: #e0e0e0 */
+  color: var(--text-color); /* Dark text for contrast on light bg */
+  border-color: var(--border-color); /* Subtle border, slightly darker than bg */
+}
+.btn-light:hover {
+  background-color: #d5d5d5; /* Slightly darker light gray */
+  border-color: #c5c5c5;
+}
+.btn-light:active {
+  background-color: #c0c0c0; /* Darker for active */
+  border-color: #b0b0b0;
+}
+
+/* Text-like Button (for nav items, page links, general text actions) */
+/* Takes full width by default, can be overridden */
+.btn-text-like {
+  background: none;
+  border: none;
+  color: var(--text-color); /* Default text color */
+  font-weight: normal; /* Reset from .btn's 500 */
+  padding: var(--spacing-md); /* Default padding for text-like buttons, e.g., 12px */
+  text-align: left;
+  width: 100%; /* Common for nav/list items */
+}
+.btn-text-like:hover {
+  background-color: var(--item-hover-bg); /* Use consistent item hover */
+  color: var(--primary-accent-color); /* Accent color on hover */
+}
+.btn-text-like.active { /* For active state, e.g., current nav item */
+  background-color: var(--active-bg-color);
+  font-weight: 600; /* Bolder for active state */
+  color: var(--primary-accent-color);
+}
+/* Modifier for links that should use link color by default */
+.btn-text-like.link-style {
+  color: var(--link-color);
+  padding: var(--spacing-sm) var(--spacing-md); /* Smaller padding for typical links: 8px 12px */
+}
+.btn-text-like.link-style:hover {
+  color: var(--primary-accent-color); /* Ensure hover matches general text-like hover */
+  text-decoration: none; /* Optional: remove underline if not desired */
+}
+.btn-text-like.link-style.active {
+  /* Active state for links, might be same as general .btn-text-like.active or different */
+  font-weight: 500; /* Or 600 if preferred */
+}
+
+
+/* Icon Button (for play/pause, etc.) */
+.btn-icon {
+  /* Usually combined with .btn and a style like .btn-primary or .btn-light */
+  width: 40px; /* Fixed size, or use calc(var(--base-spacing-unit) * 5) */
+  height: 40px;
+  padding: 0; /* Remove text padding */
+  font-size: 1.5rem; /* Icon size, adjust as needed */
+  border-radius: var(--border-radius-round); /* Circular */
+}
+.btn-icon.btn-sm { /* Optional small icon button */
+  width: calc(var(--base-spacing-unit) * 4); /* 32px */
+  height: calc(var(--base-spacing-unit) * 4);
+  font-size: 1.2rem;
+}
+
+
+/* General App Structure */
 .App {
   display: flex;
   flex-direction: column;
@@ -46,150 +226,105 @@ body {
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
-  padding: 1rem;
+  padding: var(--spacing-xl); /* 24px */
 }
 
-.sidebar h3 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary-color);
+/* Common heading style for sidebar/panel sections */
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted-text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-md); /* Adjusted to 12px for potentially tighter sidebar sections */
 }
 
 .search-container {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg); /* 16px, this is fine for a larger section break */
 }
 
 .search-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 0.9rem;
+  /* Now inherits from input global style, can add .input-base if needed */
+  width: 100%; /* Kept as it's specific to search-input's layout */
+  font-size: 0.9rem; /* Specific font size */
+  /* Padding, border, radius, bg-color, color, focus are from global input style */
 }
+/* Remove .search-input:focus as it's handled by global input:focus */
 
 .nav-links {
   list-style: none;
-  margin-bottom: 1rem;
-}
-
-.nav-button {
-  background: none;
-  border: none;
-  text-align: left;
-  width: 100%;
-  padding: 0.5rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 4px;
-}
-
-.nav-button:hover {
-  background-color: var(--block-hover-bg);
+  margin-bottom: var(--spacing-lg); /* 16px */
 }
 
 .page-list {
   list-style: none;
+  padding-left: var(--spacing-sm); /* 8px for subtle indent */
 }
 
 .page-item {
-  margin-bottom: 0.25rem;
-}
-
-.page-link {
-  background: none;
-  border: none;
-  text-align: left;
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 4px;
-  color: var(--link-color);
-}
-
-.page-link:hover {
-  background-color: var(--block-hover-bg);
+  margin-bottom: var(--spacing-xs); /* 4px */
 }
 
 /* Recording controls */
 .recording-controls {
-  margin-bottom: 1.5rem;
-  padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-radius: 4px;
+  margin-bottom: var(--spacing-xl); /* 24px, spacing between major sidebar sections */
+  padding: var(--spacing-lg); /* 16px, internal padding for the controls box */
+  background-color: var(--background-color); /* Changed from --sidebar-bg to make it distinct */
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md); /* Standard border radius */
 }
 
 .recording-buttons {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.btn-record, .btn-stop, .btn-pause {
-  padding: 0.5rem 0.75rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.btn-record {
-  background-color: var(--recording-red);
-  color: white;
-}
-
-.btn-stop {
-  background-color: #333;
-  color: white;
-}
-
-.btn-pause {
-  background-color: #f0f0f0;
-  color: #333;
+  gap: var(--spacing-md); /* 12px */
+  margin-bottom: var(--spacing-lg); /* 16px */
 }
 
 .recording-status {
-  margin: 0.5rem 0;
+  margin: var(--spacing-lg) 0; /* 16px */
   font-size: 0.85rem;
+  color: var(--muted-text-color);
 }
 
 .recording-time {
-  font-weight: bold;
-  margin-bottom: 0.25rem;
+  font-weight: 600; /* Updated */
+  margin-bottom: var(--spacing-sm); /* 8px */
+  color: var(--text-color);
 }
 
 .audio-levels {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--spacing-xs); /* 4px */
 }
 
 .level-label {
   font-size: 0.8rem;
   display: flex;
   align-items: center;
+  color: var(--muted-text-color);
 }
 
 .level-meter {
   height: 8px;
-  background-color: #e0e0e0;
-  border-radius: 4px;
+  background-color: var(--border-color); /* Use border color for base */
+  border-radius: var(--border-radius-md);
   overflow: hidden;
 }
 
 .level-fill {
   height: 100%;
-  background-color: var(--primary-color);
-  transition: width 0.1s ease;
+  background-color: var(--primary-accent-color); /* Use accent color */
+  transition: width var(--transition-fast);
 }
 
 .recording-settings {
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-lg); /* 16px */
   font-size: 0.85rem;
 }
 
 .setting-group {
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--spacing-sm); /* 8px */
   display: flex;
   align-items: center;
 }
@@ -197,21 +332,27 @@ body {
 .setting-group label {
   width: 80px;
   font-size: 0.8rem;
+  color: var(--muted-text-color);
+  margin-right: var(--spacing-sm); /* 8px */
 }
 
 .setting-group select {
-  flex: 1;
-  padding: 0.25rem;
-  font-size: 0.8rem;
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
+  /* Inherits from select global style */
+  flex: 1; /* Layout specific */
+  font-size: 0.8rem; /* Specific font size */
+  /* Padding from global select style might be var(--spacing-sm) var(--spacing-md) */
+  /* If var(--spacing-xs) is truly needed, it can be an override here */
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  border-radius: var(--border-radius-sm); /* Slightly smaller radius for smaller element */
+  /* bg-color, color, focus are from global select style */
 }
 
 /* Main editor styles */
 .main-container {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem;
+  padding: var(--spacing-xxl); /* 32px */
 }
 
 .main-editor {
@@ -220,59 +361,77 @@ body {
 }
 
 .page-title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary-color);
+  font-size: 1.8rem; /* Updated */
+  font-weight: 600; /* Updated */
+  color: var(--text-color); /* Updated */
+  margin-bottom: var(--spacing-xl); /* 24px */
 }
 
 .blocks-container {
-  margin-left: 1rem;
+  /* This margin creates the base indentation for level-0 blocks. */
+  /* Bullets will be positioned relative to this margin. */
+  margin-left: var(--indent-unit); /* e.g., 24px */
 }
 
 .block-container {
   display: flex;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm); /* 8px */
   position: relative;
 }
 
-.level-0 {
-  margin-left: 0;
-}
-
-.level-1 {
-  margin-left: 1.5rem;
-}
-
-.level-2 {
-  margin-left: 3rem;
-}
-
-.level-3 {
-  margin-left: 4.5rem;
-}
+/* Indentation levels using spacing variables */
+/* These margins are applied to .block-container elements */
+/* .level-0 is already indented by .blocks-container margin-left: var(--indent-unit) */
+.level-0 { margin-left: 0; }
+.level-1 { margin-left: var(--indent-unit); } /* Total effective indent: var(--indent-unit) * 2 */
+.level-2 { margin-left: calc(var(--indent-unit) * 2); }   /* Total effective indent: var(--indent-unit) * 3 */
+.level-3 { margin-left: calc(var(--indent-unit) * 3); } /* Total effective indent: var(--indent-unit) * 4 */
+/* etc. */
 
 .block-bullet {
   position: absolute;
-  left: -1rem;
-  color: var(--primary-color);
+  /* Position bullet to the left of the block-container's text alignment start. */
+  /* Text within block-container aligns with blocks-container's margin. */
+  left: calc(var(--indent-unit) * -1 + var(--spacing-sm)); /* e.g., -24px + 8px = -16px. This places bullet 16px left of text start */
+  color: var(--muted-text-color); /* Changed from primary-accent for subtlety */
   font-size: 1.2rem;
-  line-height: 1.5;
+  line-height: 1.7; /* Match block content */
+  padding-top: var(--spacing-xs); /* Align bullet with text */
+  user-select: none; /* Bullets are typically not selectable */
 }
 
 .block-content {
   flex: 1;
-  padding: 0.25rem 0.5rem;
-  min-height: 1.5rem;
-  border-radius: 4px;
+  padding: var(--spacing-sm) var(--spacing-md); /* 8px 12px */
+  min-height: calc(1.7em + var(--spacing-sm) * 2); /* line-height + padding */
+  border-radius: var(--border-radius-md);
   outline: none;
+  font-size: 1rem; /* Updated */
+  line-height: 1.7; /* Updated */
+  color: var(--text-color); /* Updated */
+  transition: background-color var(--transition-normal);
 }
 
 .block-content:focus {
-  background-color: var(--block-hover-bg);
+  background-color: var(--item-hover-bg); /* Use consistent hover */
+  box-shadow: 0 0 0 2px rgba(var(--primary-accent-rgb), 0.1); /* Subtle focus ring */
 }
 
 .block-content:hover {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: var(--item-hover-bg); /* Use consistent hover */
+}
+
+/* Styling for page links within block content */
+.block-content .page-link { /* This targets <span class="page-link"> inside .block-content */
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.block-content .page-link:hover {
+  color: var(--primary-accent-color); /* Darken or use primary accent on hover */
+  text-decoration-thickness: 2px;
 }
 
 /* Right panel styles */
@@ -281,86 +440,103 @@ body {
   background-color: var(--right-panel-bg);
   border-left: 1px solid var(--border-color);
   overflow-y: auto;
-  padding: 1rem;
+  padding: var(--spacing-xl); /* 24px */
 }
 
 .panel-tabs {
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg); /* 16px */
   border-bottom: 1px solid var(--border-color);
 }
 
 .tab-button {
-  padding: 0.5rem 1rem;
+  /* Inherits some base .btn properties implicitly if we decide to add .btn class in HTML */
+  /* For now, treating as a distinct element that shares some .btn ideas */
   background: none;
-  border: none;
+  border: none; /* Explicitly no border unlike .btn */
+  border-bottom: 2px solid transparent; /* Specific border for tabs */
+  border-radius: 0; /* Tabs usually not rounded on their main body */
+  padding: var(--spacing-md) var(--spacing-lg); /* 12px 16px */
   cursor: pointer;
   font-size: 0.9rem;
-  border-bottom: 2px solid transparent;
+  font-weight: 500; /* Consistent with .btn */
+  color: var(--muted-text-color);
+  transition: color 0.2s ease, border-bottom-color 0.2s ease;
+  user-select: none;
+}
+
+.tab-button:hover {
+  color: var(--primary-accent-color);
+  /* No background change on hover for these tabs */
 }
 
 .tab-button.active {
-  border-bottom: 2px solid var(--primary-color);
-  color: var(--primary-color);
-  font-weight: 500;
+  color: var(--primary-accent-color);
+  border-bottom-color: var(--primary-accent-color);
+  font-weight: 600;
 }
-
-.panel-content h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-}
+/* No separate :focus style for tab-button for now, relies on browser default or can be added if needed */
 
 .linked-references-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-lg); /* 16px */
 }
 
 .reference-item {
-  padding: 0.5rem;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.02);
+  padding: var(--spacing-md); /* 12px */
+  border-radius: var(--border-radius-md);
+  background-color: var(--background-color); /* Slightly different from panel bg */
+  border: 1px solid var(--border-color);
 }
 
 .reference-page-title {
   font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm); /* 8px */
   color: var(--link-color);
+  font-weight: 500;
+}
+.reference-page-title:hover {
+  text-decoration: underline;
 }
 
 .reference-blocks {
-  margin-left: 1rem;
+  margin-left: var(--spacing-lg); /* 16px */
+  border-left: 2px solid var(--border-color);
+  padding-left: var(--spacing-lg); /* 16px */
 }
 
 .reference-block {
   display: flex;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--spacing-sm); /* 8px */
   position: relative;
   font-size: 0.9rem;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 .graph-visualization {
   height: 300px;
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: var(--border-radius-md);
   position: relative;
   overflow: hidden;
+  background-color: var(--background-color);
 }
 
 .graph-placeholder {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #f9f9f9;
+  background-color: var(--sidebar-bg); /* Consistent light bg */
 }
 
 .graph-node {
   position: absolute;
-  padding: 0.5rem;
-  border-radius: 50%;
-  background-color: var(--secondary-color);
-  color: white;
+  padding: var(--spacing-sm); /* 8px */
+  border-radius: var(--border-radius-round);
+  background-color: var(--secondary-accent-color); /* Use new accent */
+  color: var(--text-color); /* Text color for contrast */
   font-size: 0.8rem;
   transform: translate(-50%, -50%);
   display: flex;
@@ -369,61 +545,52 @@ body {
   width: 80px;
   height: 80px;
   text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .graph-node.current {
-  background-color: var(--primary-color);
+  background-color: var(--primary-accent-color); /* Use new accent */
+  color: white;
   width: 100px;
   height: 100px;
-  left: 50%;
+  left: 50%; /* Ensure these are still appropriate */
   top: 50%;
   z-index: 2;
+  border: none;
+  box-shadow: 0 4px 8px rgba(var(--primary-accent-rgb), 0.3);
 }
 
 /* Audio player styles */
 .audio-container {
   border-top: 1px solid var(--border-color);
-  padding: 1rem;
-  background-color: #fff;
+  padding: var(--spacing-lg); /* 16px */
+  background-color: var(--background-color); /* Consistent background */
 }
 
 .audio-player {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: var(--spacing-md); /* 12px */
+  margin-bottom: var(--spacing-lg); /* 16px */
 }
 
 .player-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.play-pause-button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: var(--primary-color);
-  color: white;
+  gap: var(--spacing-lg); /* 16px */
 }
 
 .time-display {
   font-size: 0.9rem;
   font-family: monospace;
+  color: var(--muted-text-color);
 }
 
 .waveform-container {
   height: 60px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
+  background-color: var(--border-color); /* Lighter bg for waveform */
+  border-radius: var(--border-radius-md);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -433,23 +600,23 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 var(--spacing-md); /* 12px */
 }
 
 .waveform-bar {
   width: 3px;
   margin: 0 1px;
-  background-color: #ccc;
+  background-color: var(--muted-text-color); /* Muted bars */
   height: 30%;
 }
 
 .waveform-bar.active {
-  background-color: var(--primary-color);
+  background-color: var(--primary-accent-color); /* Accent for active part */
 }
 
 .recording-info {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--muted-text-color); /* Muted text */
 }
 
 /* Empty states */
@@ -460,11 +627,13 @@ body {
   justify-content: center;
   height: 100%;
   text-align: center;
-  color: #888;
+  color: var(--muted-text-color); /* Muted text */
+  padding: var(--spacing-xxl); /* 32px */
 }
 
 .empty-state h2 {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg); /* 16px */
+  color: var(--text-color);
 }
 
 /* Loading state */
@@ -479,11 +648,11 @@ body {
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  border-top-color: var(--primary-color);
+  border: 4px solid var(--hover-bg-color); /* Lighter border for spinner */
+  border-radius: var(--border-radius-round);
+  border-top-color: var(--primary-accent-color); /* Accent for spinner top */
   animation: spin 1s ease-in-out infinite;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg); /* 16px */
 }
 
 @keyframes spin {
@@ -494,19 +663,18 @@ body {
 
 /* Error state */
 .error-state {
-  padding: 2rem;
+  padding: var(--spacing-xxl); /* 32px */
   text-align: center;
-  color: #d32f2f;
+  color: #d32f2f; /* Keep error red for now, or use a variable */
+  background-color: rgba(211, 47, 47, 0.05);
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  border-radius: var(--border-radius-md);
 }
 
 .error-state button {
-  padding: 0.5rem 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
+  /* Extends .btn .btn-primary */
+  /* margin-top is the only specific style remaining. */
+  margin-top: var(--spacing-lg); /* 16px */
 }
 
 /* Responsive styles */
