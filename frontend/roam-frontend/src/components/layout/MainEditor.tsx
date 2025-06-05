@@ -22,6 +22,7 @@ const MainEditor: React.FC<MainEditorProps> = ({ pageId, pageTitle }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [currentRecordingId, setCurrentRecordingId] = useState<number | null>(null);
+  const debounceTimeoutRef = useRef<{ [key: string]: NodeJS.Timeout }>({});
   
   // Refs for block editing
   const blockRefs = useRef<{[key: string]: HTMLDivElement}>({});
@@ -50,47 +51,44 @@ const MainEditor: React.FC<MainEditorProps> = ({ pageId, pageTitle }) => {
     }
   };
   
-  const createBlock = async (parentBlockUuid: string | null, order: number, content: string = '') => {
-    if (!pageId) return;
+  const createBlock = useCallback(async (parentBlockUuid: string | null, order: number, content: string = '') => {
+    if (!pageId) {
+      console.error("pageId is undefined in createBlock");
+      return null;
+    }
     
     try {
-      const newBlock = {
+      const newBlockData = {
         content,
         page_id: pageId,
         parent_block_uuid: parentBlockUuid,
         order
       };
       
-      const response = await axios.post('http://localhost:5000/api/blocks', newBlock);
-      
-      // If recording is active, create timestamp
-      if (currentRecordingId) {
-        try {
-          await axios.post('http://localhost:5000/api/audio/timestamps', {
-            recording_id: currentRecordingId,
-            block_uuid: response.data.block_uuid,
-            timestamp_in_audio_ms: Date.now() // This would be the actual timestamp in a real app
-          });
-        } catch (error) {
-          console.error('Error creating audio timestamp:', error);
-        }
-      }
-      
+      const response = await axios.post('http://localhost:5000/api/blocks', newBlockData);
+      // Note: State update is handled by the caller (useEffect for initial, handleKeyDown for Enter)
+      // or by a general fetchBlocks if preferred (though less optimal for this case)
       return response.data;
     } catch (error) {
       console.error('Error creating block:', error);
       setError('Failed to create block. Please try again.');
+      return null;
     }
-  };
+  }, [pageId, setError]);
   
-  const updateBlock = async (blockUuid: string, content: string) => {
+  const updateBlock = useCallback(async (blockUuid: string, content: string) => {
     try {
-      await axios.put(`http://localhost:5000/api/blocks/${blockUuid}`, { content });
+      const response = await axios.put(`http://localhost:5000/api/blocks/${blockUuid}`, { content });
+      setBlocks(prevBlocks =>
+        prevBlocks.map(b => b.block_uuid === blockUuid ? response.data : b)
+      );
+      return response.data;
     } catch (error) {
       console.error('Error updating block:', error);
       setError('Failed to update block. Please try again.');
+      return null;
     }
-  };
+  }, [setBlocks, setError]); // Assuming setBlocks and setError are stable or passed from props if MainEditor is memoized.
   
   const deleteBlock = async (blockUuid: string) => {
     try {
@@ -192,12 +190,13 @@ const MainEditor: React.FC<MainEditorProps> = ({ pageId, pageTitle }) => {
   const handleBlockChange = (e: React.FormEvent<HTMLDivElement>, block: Block) => {
     const content = e.currentTarget.textContent || '';
     
-    // Debounce updates to avoid too many API calls
-    const timeoutId = setTimeout(() => {
+    if (debounceTimeoutRef.current[block.block_uuid]) {
+      clearTimeout(debounceTimeoutRef.current[block.block_uuid]);
+    }
+
+    debounceTimeoutRef.current[block.block_uuid] = setTimeout(() => {
       updateBlock(block.block_uuid, content);
     }, 500);
-    
-    return () => clearTimeout(timeoutId);
   };
   
   const processMarkdown = (content: string): React.ReactNode => {
@@ -275,10 +274,18 @@ const MainEditor: React.FC<MainEditorProps> = ({ pageId, pageTitle }) => {
   
   // Create initial block if page is empty
   useEffect(() => {
-    if (pageId && blocks.length === 0 && !loading) {
-      createBlock(null, 0);
+    const initPage = async () => {
+      if (pageId && blocks.length === 0 && !loading) {
+        const newInitialBlock = await createBlock(null, 0, ''); // Pass empty string for content
+        if (newInitialBlock) {
+          setBlocks([newInitialBlock]);
+        }
+      }
+    };
+    if (pageId) { // Condition to ensure pageId is defined when createBlock (dependent on pageId) is called
+      initPage();
     }
-  }, [pageId, blocks, loading]);
+  }, [pageId, blocks, loading, createBlock]);
   
   if (!pageId) {
     return (
