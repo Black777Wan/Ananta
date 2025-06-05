@@ -1,33 +1,35 @@
 /* Global styles for the application */
 
 :root {
-  /* Color Palette */
-  --background-color: #ffffff;
-  --sidebar-bg: #f7f7f7;
-  --right-panel-bg: #f7f7f7;
-  --text-color: #333333;
-  --muted-text-color: #757575;
-  --border-color: #e0e0e0;
-  --primary-accent-color: #509aaf; /* Desaturated, calm blue/teal */
-  --primary-accent-rgb: 80, 154, 175; /* For rgba() usage */
-  --secondary-accent-color: #e0e0e0; /* Neutral gray for secondary elements */
-  --hover-bg-color: rgba(var(--primary-accent-rgb), 0.1);
-  --active-bg-color: rgba(var(--primary-accent-rgb), 0.2);
-  --item-hover-bg: var(--hover-bg-color); /* Renamed from --block-hover-bg */
-  --link-color: var(--primary-accent-color);
-  /* --recording-red: #f39c12; */ /* Muted orange/amber - No longer directly used by buttons */
+  /* Color Palette - Roam Research Aesthetic */
+  --background-color: #fafafa;       /* Roam-like off-white */
+  --sidebar-bg: #fafafa;             /* Same as background */
+  --right-panel-bg: #fafafa;         /* Same as background */
+  --text-color: #2c2c2c;             /* Dark gray/near black */
+  --muted-text-color: #888888;       /* Lighter gray for secondary text */
+  --border-color: #dcdcdc;           /* Very subtle light gray */
 
-  /* Spacing base unit */
-  --base-spacing-unit: 8px;
-  --spacing-xs: calc(var(--base-spacing-unit) * 0.5); /* 4px */
-  --spacing-sm: var(--base-spacing-unit); /* 8px */
-  --spacing-md: calc(var(--base-spacing-unit) * 1.5); /* 12px */
-  --spacing-lg: calc(var(--base-spacing-unit) * 2); /* 16px */
-  --spacing-xl: calc(var(--base-spacing-unit) * 3); /* 24px */
-  --spacing-xxl: calc(var(--base-spacing-unit) * 4); /* 32px */
+  --accent-color: #2979ff;           /* Roam's typical blue accent */
+  --accent-color-rgb: 41, 121, 255;  /* RGB for the accent color */
+  /* --primary-accent-color and --secondary-accent-color (old) removed */
 
-  /* Main editor specific variables */
-  --indent-unit: var(--spacing-xl); /* 24px for block indentation */
+  --hover-bg-color: rgba(var(--accent-color-rgb), 0.07); /* Subtle gray or light tint of accent */
+  --active-bg-color: rgba(var(--accent-color-rgb), 0.14); /* Slightly more pronounced */
+  --item-hover-bg: var(--hover-bg-color);
+  --link-color: var(--accent-color);     /* Link color now uses the new accent */
+  /* --recording-red: #f39c12; */ /* Already commented out */
+
+  /* Spacing base unit - More compact layout */
+  --base-spacing-unit: 6px;          /* Reduced from 8px */
+  --spacing-xs: calc(var(--base-spacing-unit) * 0.5); /* 3px */
+  --spacing-sm: var(--base-spacing-unit);             /* 6px */
+  --spacing-md: calc(var(--base-spacing-unit) * 1.5); /* 9px */
+  --spacing-lg: calc(var(--base-spacing-unit) * 2);   /* 12px */
+  --spacing-xl: calc(var(--base-spacing-unit) * 3);   /* 18px */
+  --spacing-xxl: calc(var(--base-spacing-unit) * 4);  /* 24px */
+
+  /* Main editor specific variables - Roam-like indent */
+  --indent-unit: 22px;               /* Roam's typical indent */
 
   /* Border Radii */
   --border-radius-sm: 3px;
@@ -51,8 +53,8 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: var(--text-color);
   background-color: var(--background-color);
-  line-height: 1.7; /* Updated line-height */
-  font-size: 16px; /* Base font-size */
+  line-height: 1.6; /* Adjusted for Roam's density */
+  font-size: 15px; /* Adjusted for Roam's density */
 }
 
 /* Base element resets/defaults */
@@ -70,24 +72,24 @@ textarea {
 input,
 select,
 textarea {
-  padding: var(--spacing-sm) var(--spacing-md); /* Default padding for all text-based inputs */
+  padding: var(--spacing-sm); /* Reduced padding for more minimal inputs (6px) */
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
-  background-color: var(--background-color);
-  color: var(--text-color); /* Ensure text color is inherited or set */
-  transition: var(--transition-normal); /* Standardized transition */
+  background-color: var(--background-color); /* Roam inputs are often stark white if page is off-white, or same as page. This is fine. */
+  color: var(--text-color);
+  transition: var(--transition-normal);
 }
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--primary-accent-color);
-  box-shadow: 0 0 0 2px rgba(var(--primary-accent-rgb), 0.2);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 1.5px var(--accent-color); /* Tighter focus ring, less of a shadow */
   outline: none;
 }
 
 /* Specific Input Classes if needed for width or minor variations */
 .input-base { /* Can be used to apply to specific inputs if not all inputs/selects are styled this way by default */
-  /* width: 100%; */ /* Common case for inputs in this app, but applied directly to .search-input for now */
+  /* width: 100%; */
 }
 
 /* Button Standardization */
@@ -95,65 +97,67 @@ textarea:focus {
   display: inline-flex; /* Aligns icon and text if used */
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-md); /* Default: 8px 12px */
-  font-size: 0.9rem; /* Default button font size */
-  font-weight: 500; /* Default button font weight */
+  padding: calc(var(--spacing-xs) + 2px) var(--spacing-sm); /* Reduced padding: e.g. 5px 6px */
+  font-size: 0.9rem;
+  font-weight: 500;
   border-radius: var(--border-radius-md);
   cursor: pointer;
   text-align: center;
-  border: 1px solid transparent; /* Base border */
-  transition: var(--transition-normal);
-  user-select: none; /* Prevent text selection on click */
+  border: 1px solid transparent;
+  transition: var(--transition-fast); /* Faster transition for buttons */
+  user-select: none;
 }
 
 .btn:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), 0.3); /* Focus ring */
+  box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb), 0.3); /* Adjusted focus ring, use new accent */
 }
 
-/* Primary Button */
+/* Primary Button - Roam often uses the accent color for text on a subtle background or just text */
 .btn-primary {
-  background-color: var(--primary-accent-color);
+  background-color: var(--accent-color);
   color: white;
-  border-color: var(--primary-accent-color);
+  border-color: var(--accent-color);
 }
 .btn-primary:hover {
-  background-color: rgba(var(--primary-accent-rgb), 0.85); /* Slightly darker */
-  border-color: rgba(var(--primary-accent-rgb), 0.85);
+  background-color: rgba(var(--accent-color-rgb), 0.85);
+  border-color: rgba(var(--accent-color-rgb), 0.85);
 }
 .btn-primary:active {
-  background-color: rgba(var(--primary-accent-rgb), 0.7); /* Even darker for active */
-  border-color: rgba(var(--primary-accent-rgb), 0.7);
+  background-color: rgba(var(--accent-color-rgb), 0.7);
+  border-color: rgba(var(--accent-color-rgb), 0.7);
 }
 
-/* Secondary Button (Muted/Darker) */
+/* Secondary Button (More Roam-like: subtle gray) */
 .btn-secondary {
-  background-color: var(--muted-text-color); /* Example: #757575 */
-  color: white;
-  border-color: var(--muted-text-color);
+  background-color: rgba(0,0,0,0.03); /* Very light gray, almost transparent */
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 .btn-secondary:hover {
-  background-color: #5e5e5e; /* Darken var(--muted-text-color) */
-  border-color: #5e5e5e;
+  background-color: rgba(0,0,0,0.06);
+  border-color: var(--border-color); /* Keep border consistent or slightly darken */
 }
 .btn-secondary:active {
-  background-color: #474747; /* Darken further */
-  border-color: #474747;
+  background-color: rgba(0,0,0,0.09);
+  border-color: var(--border-color);
 }
 
-/* Tertiary/Light Button (e.g., Pause, Cancel) */
+/* Tertiary/Light Button - Roam often uses very subtle borders or just text */
 .btn-light {
-  background-color: var(--secondary-accent-color); /* Example: #e0e0e0 */
-  color: var(--text-color); /* Dark text for contrast on light bg */
-  border-color: var(--border-color); /* Subtle border, slightly darker than bg */
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color); /* Keep existing subtle border */
 }
 .btn-light:hover {
-  background-color: #d5d5d5; /* Slightly darker light gray */
-  border-color: #c5c5c5;
+  background-color: var(--hover-bg-color); /* Uses accent-tinted hover from theme */
+  border-color: var(--accent-color); /* Border becomes accent on hover */
+  color: var(--accent-color); /* Text becomes accent on hover */
 }
 .btn-light:active {
-  background-color: #c0c0c0; /* Darker for active */
-  border-color: #b0b0b0;
+  background-color: var(--active-bg-color); /* Uses accent-tinted active from theme */
+  border-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 /* Text-like Button (for nav items, page links, general text actions) */
@@ -161,33 +165,36 @@ textarea:focus {
 .btn-text-like {
   background: none;
   border: none;
-  color: var(--text-color); /* Default text color */
-  font-weight: normal; /* Reset from .btn's 500 */
-  padding: var(--spacing-md); /* Default padding for text-like buttons, e.g., 12px */
+  color: var(--text-color);
+  font-weight: normal;
+  padding: var(--spacing-xs) 0; /* Roam-like minimal padding: 3px 0 */
   text-align: left;
-  width: 100%; /* Common for nav/list items */
+  width: 100%;
+  border: none; /* Explicitly no border */
+  background-color: transparent; /* Explicitly transparent */
 }
 .btn-text-like:hover {
-  background-color: var(--item-hover-bg); /* Use consistent item hover */
-  color: var(--primary-accent-color); /* Accent color on hover */
+  background-color: var(--hover-bg-color);
+  color: var(--link-color); /* Roam: often blue on hover */
 }
-.btn-text-like.active { /* For active state, e.g., current nav item */
+.btn-text-like.active {
   background-color: var(--active-bg-color);
-  font-weight: 600; /* Bolder for active state */
-  color: var(--primary-accent-color);
+  font-weight: 600; /* Keep active state distinct */
+  color: var(--link-color); /* Active state also uses link color */
 }
-/* Modifier for links that should use link color by default */
+/* Modifier for links that should use link color by default (e.g. recent pages) */
 .btn-text-like.link-style {
-  color: var(--link-color);
-  padding: var(--spacing-sm) var(--spacing-md); /* Smaller padding for typical links: 8px 12px */
+  color: var(--text-color); /* Default to text color like other nav items */
+  padding: var(--spacing-xs) 0; /* Consistent padding with base .btn-text-like */
 }
 .btn-text-like.link-style:hover {
-  color: var(--primary-accent-color); /* Ensure hover matches general text-like hover */
-  text-decoration: none; /* Optional: remove underline if not desired */
+  color: var(--link-color); /* Uses link-color (accent) on hover */
+  background-color: var(--hover-bg-color); /* Consistent hover background */
 }
 .btn-text-like.link-style.active {
-  /* Active state for links, might be same as general .btn-text-like.active or different */
-  font-weight: 500; /* Or 600 if preferred */
+  color: var(--link-color); /* Active link style */
+  background-color: var(--active-bg-color); /* Consistent active background */
+  font-weight: 600;
 }
 
 
@@ -226,7 +233,7 @@ textarea:focus {
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
-  padding: var(--spacing-xl); /* 24px */
+  padding: var(--spacing-lg); /* Reduced padding to 12px */
 }
 
 /* Common heading style for sidebar/panel sections */
@@ -234,9 +241,10 @@ textarea:focus {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--muted-text-color);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--spacing-md); /* Adjusted to 12px for potentially tighter sidebar sections */
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-sm); /* Tighter margin to 6px */
 }
 
 .search-container {
@@ -267,11 +275,11 @@ textarea:focus {
 
 /* Recording controls */
 .recording-controls {
-  margin-bottom: var(--spacing-xl); /* 24px, spacing between major sidebar sections */
-  padding: var(--spacing-lg); /* 16px, internal padding for the controls box */
-  background-color: var(--background-color); /* Changed from --sidebar-bg to make it distinct */
+  margin-bottom: var(--spacing-lg); /* Reduced margin to 12px */
+  padding: var(--spacing-md); /* Reduced padding to 9px for unobtrusiveness */
+  background-color: var(--background-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-md); /* Standard border radius */
+  border-radius: var(--border-radius-md);
 }
 
 .recording-buttons {
@@ -314,7 +322,7 @@ textarea:focus {
 
 .level-fill {
   height: 100%;
-  background-color: var(--primary-accent-color); /* Use accent color */
+  background-color: var(--accent-color); /* Use new accent color */
   transition: width var(--transition-fast);
 }
 
@@ -361,10 +369,10 @@ textarea:focus {
 }
 
 .page-title {
-  font-size: 1.8rem; /* Updated */
-  font-weight: 600; /* Updated */
-  color: var(--text-color); /* Updated */
-  margin-bottom: var(--spacing-xl); /* 24px */
+  font-size: 1.6rem; /* Adjusted for Roam's less prominent page titles */
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md); /* Further reduced margin for Roam's tighter feel */
 }
 
 .blocks-container {
@@ -392,46 +400,49 @@ textarea:focus {
   position: absolute;
   /* Position bullet to the left of the block-container's text alignment start. */
   /* Text within block-container aligns with blocks-container's margin. */
-  left: calc(var(--indent-unit) * -1 + var(--spacing-sm)); /* e.g., -24px + 8px = -16px. This places bullet 16px left of text start */
-  color: var(--muted-text-color); /* Changed from primary-accent for subtlety */
-  font-size: 1.2rem;
-  line-height: 1.7; /* Match block content */
-  padding-top: var(--spacing-xs); /* Align bullet with text */
-  user-select: none; /* Bullets are typically not selectable */
+  left: calc(var(--indent-unit) * -1 + var(--spacing-sm)); /* -22px + 6px = -16px */
+  color: var(--muted-text-color);
+  font-size: 0.8rem; /* Made smaller for Roam's subtle bullets */
+  line-height: 1.6;
+  padding-top: calc(var(--spacing-xs) - 1px); /* Fine-tune vertical alignment (e.g. 3px - 1px = 2px) */
+  user-select: none;
 }
 
 .block-content {
   flex: 1;
-  padding: var(--spacing-sm) var(--spacing-md); /* 8px 12px */
-  min-height: calc(1.7em + var(--spacing-sm) * 2); /* line-height + padding */
+  padding: 2px var(--spacing-sm); /* Tighter vertical padding (2px), horizontal 6px */
+  min-height: calc(1.6em + 2px * 2); /* Adjusted for new line-height and padding */
   border-radius: var(--border-radius-md);
   outline: none;
-  font-size: 1rem; /* Updated */
-  line-height: 1.7; /* Updated */
-  color: var(--text-color); /* Updated */
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
   transition: background-color var(--transition-normal);
 }
 
 .block-content:focus {
-  background-color: var(--item-hover-bg); /* Use consistent hover */
-  box-shadow: 0 0 0 2px rgba(var(--primary-accent-rgb), 0.1); /* Subtle focus ring */
+  background-color: var(--hover-bg-color); /* More subtle focus, just like hover */
+  box-shadow: none; /* Removed box-shadow for Roam-like subtle focus */
 }
 
 .block-content:hover {
-  background-color: var(--item-hover-bg); /* Use consistent hover */
+  background-color: var(--item-hover-bg); /* item-hover-bg is same as hover-bg-color */
 }
 
 /* Styling for page links within block content */
-.block-content .page-link { /* This targets <span class="page-link"> inside .block-content */
+.block-content .page-link {
   color: var(--link-color);
   cursor: pointer;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-decoration: none;
+  border-bottom: none; /* Removed border */
+  background-color: transparent;
+  padding: 1px 2px; /* Subtle padding */
+  border-radius: var(--border-radius-sm);
 }
 .block-content .page-link:hover {
-  color: var(--primary-accent-color); /* Darken or use primary accent on hover */
-  text-decoration-thickness: 2px;
+  color: var(--accent-color);
+  background-color: var(--hover-bg-color); /* Subtle background on hover */
+  text-decoration: underline; /* Underline on hover */
 }
 
 /* Right panel styles */
@@ -440,7 +451,7 @@ textarea:focus {
   background-color: var(--right-panel-bg);
   border-left: 1px solid var(--border-color);
   overflow-y: auto;
-  padding: var(--spacing-xl); /* 24px */
+  padding: var(--spacing-lg); /* Reduced padding to 12px */
 }
 
 .panel-tabs {
@@ -454,9 +465,9 @@ textarea:focus {
   /* For now, treating as a distinct element that shares some .btn ideas */
   background: none;
   border: none; /* Explicitly no border unlike .btn */
-  border-bottom: 2px solid transparent; /* Specific border for tabs */
-  border-radius: 0; /* Tabs usually not rounded on their main body */
-  padding: var(--spacing-md) var(--spacing-lg); /* 12px 16px */
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  padding: var(--spacing-sm) var(--spacing-md); /* More compact padding: 6px 9px */
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500; /* Consistent with .btn */
@@ -466,13 +477,13 @@ textarea:focus {
 }
 
 .tab-button:hover {
-  color: var(--primary-accent-color);
+  color: var(--accent-color);
   /* No background change on hover for these tabs */
 }
 
 .tab-button.active {
-  color: var(--primary-accent-color);
-  border-bottom-color: var(--primary-accent-color);
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
   font-weight: 600;
 }
 /* No separate :focus style for tab-button for now, relies on browser default or can be added if needed */
@@ -484,33 +495,33 @@ textarea:focus {
 }
 
 .reference-item {
-  padding: var(--spacing-md); /* 12px */
-  border-radius: var(--border-radius-md);
-  background-color: var(--background-color); /* Slightly different from panel bg */
-  border: 1px solid var(--border-color);
+  padding: var(--spacing-sm) 0; /* Minimal padding for Roam feel: 6px 0 */
+  border-radius: 0; /* No radius for Roam reference items */
+  background-color: transparent; /* No distinct background */
+  border: none; /* No border for Roam reference items */
 }
 
 .reference-page-title {
   font-size: 0.9rem;
-  margin-bottom: var(--spacing-sm); /* 8px */
+  margin-bottom: var(--spacing-xs); /* Tighter margin: 3px */
   color: var(--link-color);
-  font-weight: 500;
+  font-weight: 600; /* Roam page titles in refs are often a bit bolder */
 }
 .reference-page-title:hover {
   text-decoration: underline;
 }
 
 .reference-blocks {
-  margin-left: var(--spacing-lg); /* 16px */
+  margin-left: var(--spacing-md); /* Reduced indent to 9px */
   border-left: 2px solid var(--border-color);
-  padding-left: var(--spacing-lg); /* 16px */
+  padding-left: var(--spacing-md); /* Reduced padding to 9px */
 }
 
 .reference-block {
   display: flex;
-  margin-bottom: var(--spacing-sm); /* 8px */
+  margin-bottom: var(--spacing-xs); /* Tighter margin: 3px */
   position: relative;
-  font-size: 0.9rem;
+  font-size: 0.85rem; /* Slightly smaller to differentiate from main blocks */
   color: var(--text-color);
   line-height: 1.6;
 }
@@ -535,8 +546,8 @@ textarea:focus {
   position: absolute;
   padding: var(--spacing-sm); /* 8px */
   border-radius: var(--border-radius-round);
-  background-color: var(--secondary-accent-color); /* Use new accent */
-  color: var(--text-color); /* Text color for contrast */
+  background-color: var(--border-color); /* More muted default node */
+  color: var(--text-color);
   font-size: 0.8rem;
   transform: translate(-50%, -50%);
   display: flex;
@@ -550,15 +561,15 @@ textarea:focus {
 }
 
 .graph-node.current {
-  background-color: var(--primary-accent-color); /* Use new accent */
+  background-color: var(--accent-color);
   color: white;
   width: 100px;
   height: 100px;
-  left: 50%; /* Ensure these are still appropriate */
+  left: 50%;
   top: 50%;
   z-index: 2;
   border: none;
-  box-shadow: 0 4px 8px rgba(var(--primary-accent-rgb), 0.3);
+  box-shadow: 0 4px 8px rgba(var(--accent-color-rgb), 0.3); /* Use new accent color */
 }
 
 /* Audio player styles */
@@ -611,7 +622,7 @@ textarea:focus {
 }
 
 .waveform-bar.active {
-  background-color: var(--primary-accent-color); /* Accent for active part */
+  background-color: var(--accent-color);
 }
 
 .recording-info {
@@ -650,9 +661,9 @@ textarea:focus {
   height: 40px;
   border: 4px solid var(--hover-bg-color); /* Lighter border for spinner */
   border-radius: var(--border-radius-round);
-  border-top-color: var(--primary-accent-color); /* Accent for spinner top */
-  animation: spin 1s ease-in-out infinite;
-  margin-bottom: var(--spacing-lg); /* 16px */
+  border-top-color: var(--accent-color);
+  animation: spin 1s ease-in-out infinite; /* Consider var for duration */
+  margin-bottom: var(--spacing-lg);
 }
 
 @keyframes spin {
