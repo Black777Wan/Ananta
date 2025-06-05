@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, send_from_directory
 from src.models.models import AudioRecording, AudioTimestamp, Block
-from src.main import db
+from src.extensions import db
 from werkzeug.utils import secure_filename
 import os
 import uuid
