@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from src.models.models import BlockReference, Block
-from src.main import db
+from src.extensions import db
 
 block_reference_bp = Blueprint('block_reference_bp', __name__)
 
