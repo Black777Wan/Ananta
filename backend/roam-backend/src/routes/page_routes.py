@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from src.models.models import Page, Block, Link
-from src.main import db
+from src.extensions import db
 import uuid
 import re
 

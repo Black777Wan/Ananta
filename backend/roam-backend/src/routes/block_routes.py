@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from src.models.models import Block, Page
-from src.main import db
+from src.extensions import db
 import uuid
 from src.routes.page_routes import extract_page_links
 

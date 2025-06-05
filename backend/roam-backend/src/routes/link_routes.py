@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from src.models.models import Link, Page
-from src.main import db
+from src.extensions import db
 
 link_bp = Blueprint('link_bp', __name__)
 
